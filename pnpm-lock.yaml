@@ -5,6 +5,7 @@ specifiers:
   '@yaakapp/api': ^0.5.3
   '@yaakapp/cli': ^0.3.1
   dayjs: ^1.11.18
+  prettier: ^3.6.2
   typescript: ^5.5.2
   vitest: ^3.0.5
 
@@ -15,6 +16,7 @@ dependencies:
 devDependencies:
   '@types/node': 20.19.24
   '@yaakapp/cli': 0.3.1
+  prettier: 3.6.2
   typescript: 5.9.3
   vitest: 3.2.4_@types+node@20.19.24
 
@@ -744,6 +746,12 @@ packages:
       nanoid: 3.3.11
       picocolors: 1.1.1
       source-map-js: 1.2.1
+    dev: true
+
+  /prettier/3.6.2:
+    resolution: {integrity: sha512-I7AIg5boAr5R0FFtJ6rCfD+LFsWHp81dolrFD8S79U9tb8Az2nGrJncnMSnys+bpQJfRUzqs9hnA81OAA3hCuQ==}
+    engines: {node: '>=14'}
+    hasBin: true
     dev: true
 
   /rollup/4.52.5:

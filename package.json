@@ -3,17 +3,47 @@
   "private": true,
   "version": "0.0.1",
   "author": "Aleksander Walczuk",
+  "license": "UNLICENSED",
+  "homepage": "https://github.com/aleksanderwalczuk/yaak-dayjs-plugin",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aleksanderwalczuk/yaak-dayjs-plugin.git"
+  },
+  "bugs": {
+    "url": "https://github.com/aleksanderwalczuk/yaak-dayjs-plugin/issues"
+  },
+  "contributors": [
+    {
+      "name": "Aleksander Walczuk",
+      "email": "ohleg@windowslive.com",
+      "url": "https://github.com/aleksanderwalczuk"
+    }
+  ],
+  "keywords": [
+    "yaak",
+    "dayjs",
+    "plugin"
+  ],
+  "engines": {
+    "node": ">=18"
+  },
+  "files": [
+    "build"
+  ],
   "scripts": {
-    "build": "yaakcli build"
+    "build": "yaakcli build",
+    "test": "vitest",
+    "format": "prettier --write \"**/*.{ts,tsx,json,md}\""
   },
   "devDependencies": {
-    "@types/node": "^20.14.9",
-    "@yaakapp/cli": "^0.3.1",
-    "typescript": "^5.5.2",
-    "vitest": "^3.0.5"
+    "@types/node": "20.14.9",
+    "@yaakapp/cli": "0.3.1",
+    "prettier": "3.6.2",
+    "typescript": "5.5.2",
+    "vitest": "3.0.5"
   },
   "dependencies": {
-    "@yaakapp/api": "^0.5.3",
-    "dayjs": "^1.11.18"
+    "@yaakapp/api": "0.5.3",
+    "dayjs": "1.11.18"
   }
 }

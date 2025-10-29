@@ -6,17 +6,6 @@ import advancedFormat from "dayjs/esm/plugin/advancedFormat";
 import duration from "dayjs/esm/plugin/duration";
 import localizedFormat from "dayjs/esm/plugin/localizedFormat";
 
-import "dayjs/esm/locale/pl";
-import "dayjs/esm/locale/es";
-import "dayjs/esm/locale/de";
-import "dayjs/esm/locale/nl";
-import "dayjs/esm/locale/sl";
-import "dayjs/esm/locale/fr";
-import "dayjs/esm/locale/pt";
-import "dayjs/esm/locale/it";
-import "dayjs/esm/locale/ru";
-import "dayjs/esm/locale/zh";
-
 dayjsBase.extend(localizedFormat);
 dayjsBase.extend(duration);
 dayjsBase.extend(relativeTime);
@@ -36,7 +25,7 @@ const modules = [
 ] as Array<keyof DayjsModule>;
 
 const modulesDict = {
-  "dayjs": {
+  dayjs: {
     callback: (dateTime?: string) => dayjsBase(dateTime).toJSON(),
     args: [
       {
@@ -47,8 +36,11 @@ const modulesDict = {
       },
     ] as TemplateFunctionArg[],
   },
-  "format": {
-    callback: (dateTime: string, format: string) => dayjsBase(dateTime).isValid() ? dayjsBase(dateTime).format(format) : dayjsBase().format(format),
+  format: {
+    callback: (dateTime: string, format: string) =>
+      dayjsBase(dateTime).isValid()
+        ? dayjsBase(dateTime).format(format)
+        : dayjsBase().format(format),
     args: [
       {
         type: "text",
@@ -64,8 +56,9 @@ const modulesDict = {
       },
     ] as TemplateFunctionArg[],
   },
-  "utc": {
-    callback: (dateTime: string, keepLocalTime: boolean, format: string) => dayjsBase(dateTime).utc(keepLocalTime).format(format),
+  utc: {
+    callback: (dateTime: string, keepLocalTime: boolean, format: string) =>
+      dayjsBase(dateTime).utc(keepLocalTime).format(format),
     args: [
       {
         type: "text",
@@ -80,12 +73,12 @@ const modulesDict = {
         name: "format",
         label: "Format (optional)",
         placeholder: "Leave empty for default format",
-      }
-
+      },
     ] as TemplateFunctionArg[],
   },
-  "from": {
-    callback: (dateTime: string, fromDate: string) => dayjsBase(dateTime).from(fromDate),
+  from: {
+    callback: (dateTime: string, fromDate: string) =>
+      dayjsBase(dateTime).from(fromDate),
     args: [
       {
         type: "text",
@@ -101,7 +94,7 @@ const modulesDict = {
       },
     ] as TemplateFunctionArg[],
   },
-  "toISOString": {
+  toISOString: {
     callback: (dateTime: string) => dayjsBase(dateTime).toISOString(),
     args: [
       {
@@ -112,16 +105,19 @@ const modulesDict = {
       },
     ] as TemplateFunctionArg[],
   },
-} as const satisfies Record<string, {
-  callback: (...args: any[]) => string;
-  args: TemplateFunctionArg[];
-}>;
+} as const satisfies Record<
+  string,
+  {
+    callback: (...args: any[]) => string;
+    args: TemplateFunctionArg[];
+  }
+>;
 
 export const plugin: PluginDefinition = {
   templateFunctions: Object.entries(modulesDict).map(([name, module]) => {
     return {
       name: name === "dayjs" ? "dayjs" : `dayjs.${name}`,
-      args: module.args, 
+      args: module.args,
       async onRender(_ctx, _args) {
         const args = Object.values(_args.values);
         const result = (module.callback as any)(...args);
