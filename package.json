@@ -1,0 +1,19 @@
+{
+  "name": "dayjs",
+  "private": true,
+  "version": "0.0.1",
+  "author": "Aleksander Walczuk",
+  "scripts": {
+    "build": "yaakcli build"
+  },
+  "devDependencies": {
+    "@types/node": "^20.14.9",
+    "@yaakapp/cli": "^0.3.1",
+    "typescript": "^5.5.2",
+    "vitest": "^3.0.5"
+  },
+  "dependencies": {
+    "@yaakapp/api": "^0.5.3",
+    "dayjs": "^1.11.18"
+  }
+}
