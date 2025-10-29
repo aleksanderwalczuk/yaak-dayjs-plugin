@@ -96,6 +96,7 @@ const modules = {
 } as const satisfies Record<
   string,
   {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     callback: (...args: any[]) => string;
     args: TemplateFunctionArg[];
   }
@@ -108,15 +109,18 @@ export const plugin: PluginDefinition = {
       args: module.args,
       async onRender(_ctx, _args) {
         const args = Object.values(_args.values);
-        const result = (module.callback as any)(...args);
-        _ctx.toast.show({
+
+        const result = (module.callback as (...args: unknown[]) => string)(
+          ...args
+        );
+        await _ctx.toast.show({
           message: `debug: ${args.map((arg) => arg).join(", ")} -> ${result}`,
         });
 
         if (typeof result !== "string") {
           return JSON.stringify(result);
         }
-        return result;
+        return Promise.resolve(result);
       },
     };
   }),
