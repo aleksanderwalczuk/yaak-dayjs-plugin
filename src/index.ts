@@ -12,19 +12,7 @@ dayjsBase.extend(relativeTime);
 dayjsBase.extend(utc);
 dayjsBase.extend(advancedFormat);
 
-type DayjsModule = typeof dayjsBase;
-type Foo = DayjsModule["duration"];
-
-// const modules = Object.keys(dayjsBase) as Array<keyof DayjsModule>;
-const modules = [
-  "dayjs",
-  "format",
-  "utc",
-  "relativeTime",
-  "advancedFormat",
-] as Array<keyof DayjsModule>;
-
-const modulesDict = {
+const modules = {
   dayjs: {
     callback: (dateTime?: string) => dayjsBase(dateTime).toJSON(),
     args: [
@@ -114,7 +102,7 @@ const modulesDict = {
 >;
 
 export const plugin: PluginDefinition = {
-  templateFunctions: Object.entries(modulesDict).map(([name, module]) => {
+  templateFunctions: Object.entries(modules).map(([name, module]) => {
     return {
       name: name === "dayjs" ? "dayjs" : `dayjs.${name}`,
       args: module.args,
@@ -124,6 +112,7 @@ export const plugin: PluginDefinition = {
         _ctx.toast.show({
           message: `debug: ${args.map((arg) => arg).join(", ")} -> ${result}`,
         });
+
         if (typeof result !== "string") {
           return JSON.stringify(result);
         }
