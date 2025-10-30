@@ -12,9 +12,49 @@ dayjsBase.extend(relativeTime);
 dayjsBase.extend(utc);
 dayjsBase.extend(advancedFormat);
 
+function processTextInput(dateTime?: string) {
+  return typeof dateTime === "string" ? dateTime : undefined;
+}
+
+function createValidatedCallback<T extends unknown[], R>(
+  callback: (...args: T) => R
+) {
+  return (...args: T): { result: R; message: string | null } => {
+    const dateTime = args[0] as string | undefined;
+    if (dateTime !== undefined && dateTime !== null && dateTime !== "") {
+      const dayjsObj = dayjsBase(processTextInput(dateTime));
+      if (!dayjsObj.isValid()) {
+        try {
+          return {
+            result: callback(...args),
+            message: "Invalid Date",
+          };
+        } catch {
+          return {
+            result: "Invalid Date" as R,
+            message: "Invalid Date",
+          };
+        }
+      }
+    }
+
+    return {
+      result: callback(...args),
+      message: null,
+    };
+  };
+}
+
 const modules = {
   dayjs: {
-    callback: (dateTime?: string) => dayjsBase(dateTime).toJSON(),
+    callback: createValidatedCallback(
+      (dateTime?: string, toUTCTime?: boolean) =>
+        toUTCTime
+          ? dayjsBase(processTextInput(dateTime)).toJSON()
+          : dayjsBase(processTextInput(dateTime)).format(
+              "YYYY-MM-DDTHH:mm:ss.SSSZ"
+            )
+    ),
     args: [
       {
         type: "text",
@@ -22,13 +62,18 @@ const modules = {
         label: "Base Date/Time (optional)",
         placeholder: "Leave empty for current date/time",
       },
+      {
+        type: "checkbox",
+        name: "toUTCTime",
+        label: "Convert to UTC",
+        placeholder: "Leave empty for local time",
+      },
     ] as TemplateFunctionArg[],
   },
   format: {
-    callback: (dateTime: string, format: string) =>
-      dayjsBase(dateTime).isValid()
-        ? dayjsBase(dateTime).format(format)
-        : dayjsBase().format(format),
+    callback: createValidatedCallback((dateTime: string, format: string) =>
+      dayjsBase(processTextInput(dateTime)).format(format)
+    ),
     args: [
       {
         type: "text",
@@ -44,29 +89,10 @@ const modules = {
       },
     ] as TemplateFunctionArg[],
   },
-  utc: {
-    callback: (dateTime: string, keepLocalTime: boolean, format: string) =>
-      dayjsBase(dateTime).utc(keepLocalTime).format(format),
-    args: [
-      {
-        type: "text",
-        name: "dateTime",
-      },
-      {
-        type: "checkbox",
-        name: "keepLocalTime",
-      },
-      {
-        type: "text",
-        name: "format",
-        label: "Format (optional)",
-        placeholder: "Leave empty for default format",
-      },
-    ] as TemplateFunctionArg[],
-  },
   from: {
-    callback: (dateTime: string, fromDate: string) =>
-      dayjsBase(dateTime).from(fromDate),
+    callback: createValidatedCallback((dateTime: string, fromDate: string) =>
+      dayjsBase(processTextInput(dateTime)).from(processTextInput(fromDate))
+    ),
     args: [
       {
         type: "text",
@@ -83,7 +109,9 @@ const modules = {
     ] as TemplateFunctionArg[],
   },
   toISOString: {
-    callback: (dateTime: string) => dayjsBase(dateTime).toISOString(),
+    callback: createValidatedCallback((dateTime: string) =>
+      dayjsBase(processTextInput(dateTime)).toISOString()
+    ),
     args: [
       {
         type: "text",
@@ -97,7 +125,7 @@ const modules = {
   string,
   {
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    callback: (...args: any[]) => string;
+    callback: (...args: any[]) => { result: string; message: string | null };
     args: TemplateFunctionArg[];
   }
 >;
@@ -108,19 +136,28 @@ export const plugin: PluginDefinition = {
       name: name === "dayjs" ? "dayjs" : `dayjs.${name}`,
       args: module.args,
       async onRender(_ctx, _args) {
-        const args = Object.values(_args.values);
-
-        const result = (module.callback as (...args: unknown[]) => string)(
-          ...args
+        const args = module.args.map(
+          (arg) => _args.values[(arg as { name: string }).name]
         );
-        await _ctx.toast.show({
-          message: `debug: ${args.map((arg) => arg).join(", ")} -> ${result}`,
-        });
 
-        if (typeof result !== "string") {
-          return JSON.stringify(result);
+        const response = (
+          module.callback as (...args: unknown[]) => {
+            result: string;
+            message: string | null;
+          }
+        )(...args);
+
+        if (response.message) {
+          void _ctx.toast.show({
+            message: response.message,
+            icon: "alert_triangle",
+          });
         }
-        return Promise.resolve(result);
+
+        if (typeof response.result !== "string") {
+          return JSON.stringify(response.result);
+        }
+        return Promise.resolve(response.result);
       },
     };
   }),
