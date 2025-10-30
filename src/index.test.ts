@@ -2,7 +2,10 @@
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 import { describe, expect, test, vi } from "vitest";
 import { plugin } from "./index";
-import dayjsBase from "dayjs/esm";
+import dayjsBase from "dayjs";
+import utc from "dayjs/plugin/utc";
+
+dayjsBase.extend(utc);
 
 // Use a fixed date for deterministic tests
 const FIXED_DATE = "2024-01-15T12:00:00.000Z";
