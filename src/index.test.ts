@@ -4,8 +4,13 @@ import { describe, expect, test, vi } from "vitest";
 import { plugin } from "./index";
 import dayjsBase from "dayjs";
 import utc from "dayjs/plugin/utc";
+import relativeTime from "dayjs/plugin/relativeTime";
+import advancedFormat from "dayjs/plugin/advancedFormat";
 
+// Extend dayjs with plugins
 dayjsBase.extend(utc);
+dayjsBase.extend(relativeTime);
+dayjsBase.extend(advancedFormat);
 
 // Use a fixed date for deterministic tests
 const FIXED_DATE = "2024-01-15T12:00:00.000Z";

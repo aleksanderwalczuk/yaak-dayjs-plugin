@@ -90,8 +90,12 @@ const modules = {
     ] as TemplateFunctionArg[],
   },
   from: {
-    callback: createValidatedCallback((dateTime: string, fromDate: string) =>
-      dayjsBase(processTextInput(dateTime)).from(processTextInput(fromDate))
+    callback: createValidatedCallback(
+      (dateTime: string, fromDate: string, withoutSuffix: boolean) =>
+        dayjsBase(processTextInput(dateTime)).from(
+          dayjsBase(processTextInput(fromDate)),
+          withoutSuffix != null ? withoutSuffix : false
+        )
     ),
     args: [
       {
@@ -104,7 +108,14 @@ const modules = {
         type: "text",
         name: "fromDate",
         label: "From Date/Time",
-        placeholder: "Leave empty for current date/time",
+        placeholder:
+          "The date to compare from. Leave empty for current date/time",
+      },
+      {
+        type: "checkbox",
+        name: "withoutSuffix",
+        label: "Without suffix",
+        placeholder: "Leave empty for with suffix (ago/from now)",
       },
     ] as TemplateFunctionArg[],
   },
