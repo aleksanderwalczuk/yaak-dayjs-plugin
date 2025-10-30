@@ -3,7 +3,7 @@
   "private": false,
   "displayName": "Yaak Day.js Plugin",
   "description": "A Yaak plugin that provides Day.js date/time manipulation functions as template functions for API testing and development.",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "author": "Aleksander Walczuk",
   "license": "UNLICENSED",
   "homepage": "https://github.com/aleksanderwalczuk/yaak-dayjs-plugin",
