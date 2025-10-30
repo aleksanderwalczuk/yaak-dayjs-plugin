@@ -1,10 +1,10 @@
 import { PluginDefinition, TemplateFunctionArg } from "@yaakapp/api";
-import dayjsBase from "dayjs/esm";
-import utc from "dayjs/esm/plugin/utc";
-import relativeTime from "dayjs/esm/plugin/relativeTime";
-import advancedFormat from "dayjs/esm/plugin/advancedFormat";
-import duration from "dayjs/esm/plugin/duration";
-import localizedFormat from "dayjs/esm/plugin/localizedFormat";
+import dayjsBase from "dayjs";
+import utc from "dayjs/plugin/utc";
+import relativeTime from "dayjs/plugin/relativeTime";
+import advancedFormat from "dayjs/plugin/advancedFormat";
+import duration from "dayjs/plugin/duration";
+import localizedFormat from "dayjs/plugin/localizedFormat";
 
 dayjsBase.extend(localizedFormat);
 dayjsBase.extend(duration);

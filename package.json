@@ -1,6 +1,5 @@
 {
   "name": "@aleksander/yaak-dayjs",
-  "type": "module",
   "private": false,
   "displayName": "Yaak Day.js Plugin",
   "description": "A Yaak plugin that provides Day.js date/time manipulation functions as template functions for API testing and development.",
