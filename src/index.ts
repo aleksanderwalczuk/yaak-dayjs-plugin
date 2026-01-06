@@ -1,10 +1,10 @@
 import { PluginDefinition, TemplateFunctionArg } from "@yaakapp/api";
 import dayjsBase from "dayjs";
-import utc from "dayjs/plugin/utc";
-import relativeTime from "dayjs/plugin/relativeTime";
 import advancedFormat from "dayjs/plugin/advancedFormat";
 import duration from "dayjs/plugin/duration";
 import localizedFormat from "dayjs/plugin/localizedFormat";
+import relativeTime from "dayjs/plugin/relativeTime";
+import utc from "dayjs/plugin/utc";
 
 dayjsBase.extend(localizedFormat);
 dayjsBase.extend(duration);
@@ -61,12 +61,14 @@ const modules = {
         name: "dateTime",
         label: "Base Date/Time (optional)",
         placeholder: "Leave empty for current date/time",
+        optional: true,
       },
       {
         type: "checkbox",
         name: "toUTCTime",
         label: "Convert to UTC",
         placeholder: "Leave empty for local time",
+        optional: true,
       },
     ] as TemplateFunctionArg[],
   },
@@ -80,12 +82,14 @@ const modules = {
         name: "dateTime",
         label: "Base Date/Time",
         placeholder: "Leave empty for current date/time",
+        optional: true,
       },
       {
         type: "text",
         name: "format",
         label: "Format (optional)",
         placeholder: "YYYY-MM-DD HH:mm:ss",
+        optional: true,
       },
     ] as TemplateFunctionArg[],
   },
@@ -103,6 +107,7 @@ const modules = {
         name: "dateTime",
         label: "Date/Time",
         placeholder: "Leave empty for current date/time",
+        optional: true,
       },
       {
         type: "text",
@@ -110,6 +115,7 @@ const modules = {
         label: "From Date/Time",
         placeholder:
           "The date to compare from. Leave empty for current date/time",
+        optional: true,
       },
       {
         type: "checkbox",
@@ -129,6 +135,7 @@ const modules = {
         name: "dateTime",
         label: "Date/Time",
         placeholder: "Leave empty for current date/time",
+        optional: true,
       },
     ] as TemplateFunctionArg[],
   },
