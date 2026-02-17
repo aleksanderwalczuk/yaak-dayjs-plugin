@@ -59,7 +59,7 @@ const modules = {
       {
         type: "text",
         name: "dateTime",
-        label: "Base Date/Time (optional)",
+        label: "Base Date/Time",
         optional: true,
         placeholder: "Leave empty for current date/time",
       },
@@ -86,7 +86,7 @@ const modules = {
       {
         type: "text",
         name: "format",
-        label: "Format (optional)",
+        label: "Format",
         optional: true,
         placeholder: "YYYY-MM-DD HH:mm:ss",
       },
