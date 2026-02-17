@@ -59,7 +59,8 @@ const modules = {
       {
         type: "text",
         name: "dateTime",
-        label: "Base Date/Time (optional)",
+        label: "Base Date/Time",
+        optional: true,
         placeholder: "Leave empty for current date/time",
       },
       {
@@ -79,12 +80,14 @@ const modules = {
         type: "text",
         name: "dateTime",
         label: "Base Date/Time",
+        optional: true,
         placeholder: "Leave empty for current date/time",
       },
       {
         type: "text",
         name: "format",
-        label: "Format (optional)",
+        label: "Format",
+        optional: true,
         placeholder: "YYYY-MM-DD HH:mm:ss",
       },
     ] as TemplateFunctionArg[],
@@ -102,12 +105,14 @@ const modules = {
         type: "text",
         name: "dateTime",
         label: "Date/Time",
+        optional: true,
         placeholder: "Leave empty for current date/time",
       },
       {
         type: "text",
         name: "fromDate",
         label: "From Date/Time",
+        optional: true,
         placeholder:
           "The date to compare from. Leave empty for current date/time",
       },
@@ -128,6 +133,7 @@ const modules = {
         type: "text",
         name: "dateTime",
         label: "Date/Time",
+        optional: true,
         placeholder: "Leave empty for current date/time",
       },
     ] as TemplateFunctionArg[],
